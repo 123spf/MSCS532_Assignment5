@@ -77,3 +77,50 @@ def quicksort_randomized(arr, p, r):
         q = randomized_hoare_partition(arr, p, r)
         quicksort_randomized(arr, p, q)
         quicksort_randomized(arr, q + 1, r)
+
+# ==========================================
+# 3. EMPIRICAL ANALYSIS / TESTING
+# ==========================================
+
+def run_empirical_analysis():
+    """
+    Generates distributions, runs both algorithms, and prints the execution times.
+    """
+    n = 1000
+    print(f"--- Quicksort Empirical Analysis (Array Size: {n}) ---")
+    
+    # 1. Random Distribution
+    arr_random_det = [random.randint(1, 10000) for _ in range(n)]
+    arr_random_rand = arr_random_det.copy()
+    
+    # 2. Sorted Distribution
+    arr_sorted_det = sorted(arr_random_det)
+    arr_sorted_rand = arr_sorted_det.copy()
+    
+    # 3. Reverse-Sorted Distribution
+    arr_reverse_det = sorted(arr_random_det, reverse=True)
+    arr_reverse_rand = arr_reverse_det.copy()
+
+    distributions = [
+        ("Random", arr_random_det, arr_random_rand),
+        ("Sorted", arr_sorted_det, arr_sorted_rand),
+        ("Reverse-Sorted", arr_reverse_det, arr_reverse_rand)
+    ]
+    
+    for name, arr_det, arr_rand in distributions:
+        print(f"\nDistribution: {name}")
+        
+        # Test Deterministic
+        start_time = time.perf_counter()
+        quicksort_deterministic(arr_det, 0, len(arr_det) - 1)
+        det_time = time.perf_counter() - start_time
+        print(f"  Deterministic Time: {det_time:.6f} seconds")
+        
+        # Test Randomized
+        start_time = time.perf_counter()
+        quicksort_randomized(arr_rand, 0, len(arr_rand) - 1)
+        rand_time = time.perf_counter() - start_time
+        print(f"  Randomized Time:    {rand_time:.6f} seconds")
+
+if __name__ == "__main__":
+    run_empirical_analysis()
