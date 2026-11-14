@@ -37,3 +37,16 @@ def hoare_partition(arr, p, r):
             # Pointers have crossed; return the partition index
             return j
 
+def quicksort_deterministic(arr, p, r):
+    """
+    Deterministic Quicksort algorithm.
+    """
+    if p < r:
+        # q is the partition index
+        q = hoare_partition(arr, p, r)
+        
+        # Recursively sort the sub-arrays. 
+        # Note: Hoare partition includes the pivot in the left or right sub-array,
+        # so we split at q and q+1 (unlike Lomuto which splits at q-1 and q+1).
+        quicksort_deterministic(arr, p, q)
+        quicksort_deterministic(arr, q + 1, r)
