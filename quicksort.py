@@ -50,3 +50,30 @@ def quicksort_deterministic(arr, p, r):
         # so we split at q and q+1 (unlike Lomuto which splits at q-1 and q+1).
         quicksort_deterministic(arr, p, q)
         quicksort_deterministic(arr, q + 1, r)
+
+# ==========================================
+# 2. RANDOMIZED QUICKSORT (Hoare Partition)
+# ==========================================
+
+def randomized_hoare_partition(arr, p, r):
+    """
+    Randomized Hoare partition. 
+    Selects a random pivot, swaps it to the front, and then uses normal Hoare logic.
+    """
+    # Select a random index between p and r (inclusive)
+    pivot_idx = random.randint(p, r)
+    
+    # Swap the random pivot with the first element
+    arr[p], arr[pivot_idx] = arr[pivot_idx], arr[p]
+    
+    # Proceed with the standard Hoare partition
+    return hoare_partition(arr, p, r)
+
+def quicksort_randomized(arr, p, r):
+    """
+    Randomized Quicksort algorithm.
+    """
+    if p < r:
+        q = randomized_hoare_partition(arr, p, r)
+        quicksort_randomized(arr, p, q)
+        quicksort_randomized(arr, q + 1, r)
