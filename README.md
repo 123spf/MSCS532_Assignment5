@@ -2,31 +2,33 @@
 
 ## Overview
 
-This repository contains the deliverables for Assignment 5. It explores the divide-and-conquer Quicksort algorithm by implementing both a Deterministic version and a Randomized version using the highly efficient **Hoare partition** scheme. 
+This repository contains the deliverables for Assignment 5. It explores the divide-and-conquer Quicksort algorithm by implementing both a Deterministic version and a Randomized version using the Hoare partition scheme.
 
-By running the empirical testing script, you can observe firsthand how randomization shields the algorithm from its $O(n^2)$ worst-case time complexity vulnerabilities when confronted with sorted or reverse-sorted data.
+By running the empirical testing script, you can observe how randomization protects the algorithm from its $O(n^2)$ worst-case time complexity vulnerabilities when sorting ordered or reverse-ordered data.
 
 ## Repository Contents
 
-*   `quicksort.py`: The main Python source code. It contains the logic for `quicksort_deterministic` and `quicksort_randomized`, alongside an empirical testing function that measures and prints execution times.
-*   `Assignment5_Report.md`: A comprehensive analysis covering the time and space complexity, the theoretical decision-tree lower bounds of comparison sorting, and an evaluation of the empirical data.
-*   `README.md`: Instructions for running the project.
+* `quicksort.py`: The main Python source code. It contains the logic for deterministic and randomized Quicksort using Hoare partitioning, along with an empirical testing suite that measures execution times across multiple input sizes and distributions.
+
+* `assignment5.pdf`: A detailed report covering implementation choices, best/average/worst-case time and space complexity, the impact of randomization, and an evaluation of the empirical test results.
+
+* `README.md`: Instructions for running the project and a summary of findings.
 
 ## How to Run the Code
 
-The implementation and the empirical testing suite are bundled into a single, easy-to-run Python script.
+The implementation and empirical tests are bundled into a single Python script.
 
-1.  Open your terminal or command prompt.
-2.  Navigate to the directory containing the repository files.
-3.  Execute the following command:
-    `python3 quicksort.py`
-
+1. Open your terminal or VS Code integrated terminal.
+2. Navigate to the directory containing the repository files.
+3. Execute the following command:
+   `python3 quicksort.py`
 
 ## Summary of Findings
 
-When you run the script, the program will generate an array of 1,000 integers and format it into three different distributions: Random, Sorted, and Reverse-Sorted. It will then sort these arrays using both algorithms and print the time it took.
+When executed, the script benchmarks both algorithms on array sizes of $n = 500$, $n = 1,000$, and $n = 2,000$ across three distributions: Random, Sorted, and Reverse-Sorted.
 
 **Key Observations:**
-*   **Random Arrays:** Both the deterministic and randomized versions perform rapidly, completing the sort in a fraction of a millisecond. This represents the expected $O(n \log n)$ time complexity.
-*   **Sorted and Reverse-Sorted Arrays:** The deterministic algorithm experiences a massive performance degradation, taking exponentially longer to sort the data. Because it always picks the first element as the pivot, the sorted data forces the partition to create extremely unbalanced splits, triggering the $O(n^2)$ worst-case scenario.
-*   **The Power of Randomization:** The randomized algorithm maintains its lightning-fast $O(n \log n)$ speed across all distributions. By selecting the pivot randomly, it completely ignores the sorted layout of the data, proving that randomization is a highly effective way to guarantee efficient scaling.
+
+* **Random Arrays:** Both the deterministic and randomized versions perform rapidly across all tested sizes (completing in roughly 0.5 to 4.5 milliseconds), reflecting expected $O(n \log n)$ scaling.
+* **Sorted and Reverse-Sorted Arrays:** Deterministic Quicksort suffers severe quadratic $O(n^2)$ slowdowns as the input size grows (taking up to 0.153 seconds at $n = 2,000$) because selecting the first element consistently produces maximally unbalanced splits.
+* **Impact of Randomization:** Randomized Quicksort maintains fast $O(n \log n)$ performance across all input distributions (finishing in roughly 3.0 to 4.4 milliseconds at $n = 2,000$), running up to 50 times faster than the deterministic version on sorted data.

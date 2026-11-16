@@ -123,4 +123,36 @@ def run_empirical_analysis():
         print(f"  Randomized Time:    {rand_time:.6f} seconds")
 
 if __name__ == "__main__":
-    run_empirical_analysis()
+
+    sizes = [500, 1000, 2000]
+
+    for size in sizes:
+        print(f"\n--- Quicksort Empirical Analysis (Array Size: {size}) ---")
+
+        distributions = {
+            "Random": [random.randint(1, 10000) for _ in range(size)],
+            "Sorted": list(range(1, size + 1)),
+            "Reverse-Sorted": list(range(size, 0, -1))
+        }
+
+        for dist_name, data in distributions.items():
+            # Copy arrays so both algorithms sort the exact same data
+            det_data = data.copy()
+            rand_data = data.copy()
+
+            # Time Deterministic Quicksort
+            start_time = time.perf_counter()
+            quicksort_deterministic(det_data, 0, len(det_data) - 1)
+            det_time = time.perf_counter() - start_time
+
+            # Time Randomized Quicksort
+            start_time = time.perf_counter()
+            quicksort_randomized(rand_data, 0, len(rand_data) - 1)
+            rand_time = time.perf_counter() - start_time
+
+            # Verify correctness
+            assert det_data == rand_data == sorted(data), f"Sorting failed on {dist_name}"
+
+            print(f"\nDistribution: {dist_name}")
+            print(f"  Deterministic Time: {det_time:.6f} seconds")
+            print(f"  Randomized Time:    {rand_time:.6f} seconds")
